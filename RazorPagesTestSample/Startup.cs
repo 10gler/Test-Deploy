@@ -14,7 +14,7 @@ namespace RazorPagesTestSample
         {
             services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("InMemoryDb"));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddRazorPages();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -22,7 +22,6 @@ namespace RazorPagesTestSample
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -30,7 +29,12 @@ namespace RazorPagesTestSample
             }
 
             app.UseStaticFiles();
-            app.UseMvc();
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapRazorPages();
+            });
         }
     }
 }
